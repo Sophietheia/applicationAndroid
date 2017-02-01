@@ -7,6 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import ai.api.AIListener;
+import ai.api.android.AIConfiguration;
+import ai.api.android.AIService;
+
+import com.google.gson.JsonElement;
+import java.util.Map;
+
+
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -20,6 +29,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("Sophie_the_AI", "Ca marche");
 
                 Intent myIntent = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button myButton2 = (Button) findViewById(R.id.listenButton);
+        myButton2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.i("Sophie_the_AI", "Ca marche");
+
+                Intent myIntent = new Intent(MainActivity.this, ListenActivity.class);
                 startActivity(myIntent);
             }
         });

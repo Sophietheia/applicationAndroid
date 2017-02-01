@@ -1,15 +1,15 @@
 package sophie.testgooglemaps;
 
 import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+        import android.app.AlertDialog;
+        import android.app.Dialog;
+        import android.content.DialogInterface;
+        import android.content.pm.PackageManager;
+        import android.os.Bundle;
+        import android.support.v4.app.ActivityCompat;
+        import android.support.v4.app.DialogFragment;
+        import android.support.v7.app.AppCompatActivity;
+        import android.widget.Toast;
 
 /**
  * Created by Alex on 09/01/2017.
