@@ -1,26 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <Button
         android:text="Listen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/listenButton2"
+        android:onClick="listenButtonOnClick"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="28dp"
-        android:id="@+id/listenButton2"
-        android:onClick="listenButtonOnClick" />
+        android:layout_marginTop="29dp" />
 
     <EditText
         android:layout_width="300dp"
-        android:layout_height="400dp"
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
         android:id="@+id/resultTextView"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/responseTextView"
+        android:layout_marginRight="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="31dp"
         android:layout_below="@+id/listenButton2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp" />
+        android:layout_alignRight="@+id/resultTextView"
+        android:layout_alignEnd="@+id/resultTextView" />
+
+    <TextView
+        android:text=" Answer: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        tools:text="Answer"
+        android:layout_alignBaseline="@+id/responseTextView"
+        android:layout_alignBottom="@+id/responseTextView"
+        android:layout_alignLeft="@+id/resultTextView"
+        android:layout_alignStart="@+id/resultTextView" />
 
 </RelativeLayout>

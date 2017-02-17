@@ -29,6 +29,10 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Alex on 01/02/2017.
  */
@@ -38,6 +42,7 @@ public class ListenActivity extends Activity implements AIListener {
     private Button listenButton2;
     private TextView resultTextView;
     private AIService aiService;
+    private TextView responseTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,7 @@ public class ListenActivity extends Activity implements AIListener {
 
         listenButton2 = (Button) findViewById(R.id.listenButton2);
         resultTextView = (TextView) findViewById(R.id.resultTextView);
+        responseTextView = (TextView) findViewById(R.id.responseTextView);
 
         // ask permission to use the microphone
         if (ContextCompat.checkSelfPermission(ListenActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -82,7 +88,14 @@ public class ListenActivity extends Activity implements AIListener {
         resultTextView.setText("Query:" + result.getResolvedQuery() +
                 "\nAction: " + result.getAction() +
                 "\nParameters: " + parameterString + "\nSpeech: " + result.getFulfillment().getSpeech());
+
+
+        responseTextView.setText(result.getFulfillment().getSpeech());
+
+
     }
+
+
 
     // method to handle errors
     @Override
