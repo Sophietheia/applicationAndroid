@@ -81,7 +81,7 @@ public class ListenActivity extends Activity implements AIListener {
         // Show results in TextView.
         resultTextView.setText("Query:" + result.getResolvedQuery() +
                 "\nAction: " + result.getAction() +
-                "\nParameters: " + parameterString);
+                "\nParameters: " + parameterString + "\nSpeech: " + result.getFulfillment().getSpeech());
     }
 
     // method to handle errors
