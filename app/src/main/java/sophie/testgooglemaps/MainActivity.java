@@ -7,14 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import ai.api.AIListener;
-import ai.api.android.AIConfiguration;
-import ai.api.android.AIService;
-
-import com.google.gson.JsonElement;
-import java.util.Map;
-
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,13 +25,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button myButton2 = (Button) findViewById(R.id.listenButton);
+        Button myButton2 = (Button) findViewById(R.id.button2);
         myButton2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Log.i("Sophie_the_AI", "Ca marche");
 
                 Intent myIntent = new Intent(MainActivity.this, ListenActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        Button myButton3 = (Button) findViewById(R.id.button3);
+        myButton3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.i("Sophie_the_AI", "Ca marche");
+
+                Intent myIntent = new Intent(MainActivity.this, AlertActivity.class);
                 startActivity(myIntent);
             }
         });

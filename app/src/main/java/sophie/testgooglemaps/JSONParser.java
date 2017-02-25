@@ -66,15 +66,14 @@ public class JSONParser {
                 // Execute the request
                 HttpGet httpGet = new HttpGet(url);
 
-                Log.i("Sophie_the_AI", "Etape 3");
                 // Execute the request and fetch Http response
                 HttpResponse httpResponse = httpClient.execute(httpGet);
 
-                Log.i("Sophie_the_AI", "Etape 4");
+
                 // Extract the result from the response
                 HttpEntity httpEntity = httpResponse.getEntity();
 
-                Log.i("Sophie_the_AI", "Etape 5");
+
                 // Open the result as an input stream for parsing
                 httpResponseStream = httpEntity.getContent();
 

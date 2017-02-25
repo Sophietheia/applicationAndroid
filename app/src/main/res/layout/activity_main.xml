@@ -20,22 +20,31 @@ tools:context="sophie.testgooglemaps.MainActivity">
     android:layout_centerHorizontal="true"
     android:layout_marginBottom="212dp" />
 
-<Button
-    android:text="Maps"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="74dp"
-    android:id="@+id/button1" />
+    <Button
+        android:text="Alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
+
+    <Button
+        android:text="Maps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="22dp"
+        android:id="@+id/button1"
+        android:layout_above="@+id/button2"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="Listen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/listenButton"
-        android:layout_marginBottom="13dp"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/button2"
+        android:layout_marginBottom="19dp"
+        android:layout_above="@+id/button3"
         android:layout_alignLeft="@+id/button1"
         android:layout_alignStart="@+id/button1" />
 </RelativeLayout>

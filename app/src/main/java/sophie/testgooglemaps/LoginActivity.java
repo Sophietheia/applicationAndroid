@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -22,24 +23,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -76,20 +67,24 @@ import static java.sql.DriverManager.getConnection;
 public class LoginActivity extends Activity {
 
     // Lien vers votre page php sur votre serveur
-    private static final String	UPDATE_URL	= "https://glacial-falls-56009.herokuapp.com/register";
+    private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/login";
 
     public ProgressDialog progressDialog;
 
-
     private EditText UserEditText;
+    private EditText PassEditText;
+
 
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         // Récupération des éléments de la vue définis dans le xml
         UserEditText = (EditText) findViewById(R.id.username);
+        PassEditText = (EditText) findViewById(R.id.password);
+
 
         Button myButton = (Button) findViewById(R.id.okbutton);
         myButton.setOnClickListener(new View.OnClickListener(){
@@ -97,23 +92,20 @@ public class LoginActivity extends Activity {
             public void onClick(View v){
                 Log.i("Sophie_the_AI", "Ca marche");
 
-               /* List<NameValuePair> params = new ArrayList<NameValuePair>();
-                JSONParser jsonParser = new JSONParser();
-                Log.i("Sophie_the_AI", "Etape 2");
-
-
-                jsonParser.makeHttpRequest ("https://glacial-falls-56009.herokuapp.com/testdb?info=test", "GET", params);
-
-                Log.i("Sophie_the_AI", "Requete json faite");*/
-
-                new JSONParse().execute();
-
-                Log.i("Sophie_the_AI", "Requete json faite");
-
-             // Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-              //startActivity(myIntent);
-
-
+                try {
+                    JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
+                    String connection = response.optString("connection");
+                    //System.out.println(connection);  // Pour vérifier la valeure de connection dans les logs
+                    if (connection=="true")
+                    {
+                        Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(myIntent);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
 
             }
         });
@@ -139,12 +131,15 @@ public class LoginActivity extends Activity {
             JSONParser jsonParser = new JSONParser();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // Getting JSON from URL
-            JSONObject json = jsonParser.makeHttpRequest ("https://glacial-falls-56009.herokuapp.com/testdb?info=test", "GET", params);
+            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
+
+            Log.i("Sophie_the_AI", json.toString());
             return json;
         }
         @Override
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
+
 
 
         }

@@ -54,6 +54,11 @@
             android:label="listen">
         </activity>
 
+        <activity
+            android:name=".AlertActivity"
+            android:label="alert">
+        </activity>
+
     </application>
 
 </manifest>
