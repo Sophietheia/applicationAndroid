@@ -59,6 +59,10 @@
             android:label="alert">
         </activity>
 
+        <activity
+            android:name=".MemoryActivity">
+        </activity>
+
     </application>
 
 </manifest>
