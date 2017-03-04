@@ -87,10 +87,22 @@ public class LoginActivity extends Activity {
 
 
         Button myButton = (Button) findViewById(R.id.okbutton);
+
+   myButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+        /*
         myButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Log.i("Sophie_the_AI", "Ca marche");
+              Log.i("Sophie_the_AI", "Ca marche");
 
                 try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
@@ -109,7 +121,7 @@ public class LoginActivity extends Activity {
 
             }
         });
-
+*/
     }
 
     private class JSONParse extends AsyncTask<String, String, JSONObject> {
