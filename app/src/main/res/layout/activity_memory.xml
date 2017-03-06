@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e9e5dc">
 
 
     <Button
-        android:text="PLAY GAME"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:background="@drawable/card"
+        android:id="@+id/playBtn" />
+
+    <TextView
+        android:text="Click on the cards to play a Game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/playBtn" />
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/resultTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp" />
 
 </LinearLayout>
