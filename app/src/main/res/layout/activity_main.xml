@@ -47,4 +47,16 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_above="@+id/button3"
         android:layout_alignLeft="@+id/button1"
         android:layout_alignStart="@+id/button1" />
+
+    <Button
+        android:text="Rappels"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
