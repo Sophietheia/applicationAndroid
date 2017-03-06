@@ -10,11 +10,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Sophie The AI"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -46,7 +47,17 @@
             android:label="listen"></activity>
         <activity
             android:name=".AlertActivity"
-            android:label="alert"></activity>
+            android:label="alert">
+        </activity>
+
+        <service
+            android:name="sophie.testgooglemaps.CheckRecentRun" >
+        </service>
+
+        <activity
+            android:name=".MemoryActivity">
+        </activity>
+
         <activity android:name=".RappelsActivity"></activity>
     </application>
 
