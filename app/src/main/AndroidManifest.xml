@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -59,9 +60,14 @@
             android:label="alert">
         </activity>
 
+        <service
+            android:name="sophie.testgooglemaps.CheckRecentRun" >
+        </service>
+
         <activity
             android:name=".MemoryActivity">
         </activity>
+
 
     </application>
 
