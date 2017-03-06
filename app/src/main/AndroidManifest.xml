@@ -64,6 +64,11 @@
             android:name="sophie.testgooglemaps.CheckRecentRun" >
         </service>
 
+        <activity
+            android:name=".MemoryActivity">
+        </activity>
+
+
     </application>
 
 </manifest>

@@ -73,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(myIntent);
             }
         });
+
+        Button buttonGame = (Button) findViewById(R.id.buttonGame);
+        buttonGame.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(MainActivity.this, MemoryActivity.class);
+                startActivity(myIntent);
+            }
+        });
         
     }
 
@@ -81,12 +92,16 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
+
     public void enableNotification() {
         editor.putLong("lastRun", System.currentTimeMillis());
         editor.putBoolean("enabled", true);
         editor.commit();
         Log.v(TAG, "Notifications enabled");
     }
+
+
+
 
     public void disableNotification() {
         editor.putBoolean("enabled", false);
