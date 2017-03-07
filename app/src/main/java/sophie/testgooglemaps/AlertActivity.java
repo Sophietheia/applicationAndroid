@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 import org.apache.http.NameValuePair;
@@ -29,7 +31,7 @@ public class AlertActivity  extends Activity {
 
     // Lien vers votre page php sur votre serveur
     private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/alert";
-
+    private Button ButtonBack;
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -39,12 +41,28 @@ public class AlertActivity  extends Activity {
 
         Button myButton = (Button) findViewById(R.id.button4);
         myButton.setOnClickListener(new View.OnClickListener(){
+
+
             @Override
             public void onClick(View v){
                 new AlertActivity.JSONParse().execute();
+                View parentsView = (View) v.getParent();
+                parentsView.setBackgroundColor(Color.RED);
 
             }
 
+        });
+
+        ButtonBack= (Button) findViewById(R.id.buttonBack);
+
+        ButtonBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(AlertActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
         });
 
     }

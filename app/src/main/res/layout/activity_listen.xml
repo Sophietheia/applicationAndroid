@@ -5,6 +5,13 @@
     android:background="#e1d7c3"
     >
 
+    <Button
+        android:layout_width="130dp"
+        android:id="@+id/buttonBack"
+        android:layout_height="97dp"
+        android:layout_weight="0.20"
+        android:background="@drawable/ic_close_light" />
+
     <EditText
         android:layout_width="300dp"
         android:inputType="textPersonName"
@@ -27,18 +34,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="23dp"
-        android:layout_marginEnd="23dp" />
-
-    <Button
-        android:text=" "
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:id="@+id/listenButton2"
-        android:onClick="listenButtonOnClick"
-        android:background="@drawable/micro2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginEnd="23dp"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TextView.PopupMenu" />
 
     <TextView
         android:text=" Answer"
@@ -62,5 +59,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text=" "
+        android:layout_width="match_parent"
+        android:id="@+id/listenButton2"
+        android:onClick="listenButtonOnClick"
+        android:background="@drawable/micro2"
+        android:layout_below="@+id/buttonBack"
+        android:layout_height="200dp" />
 
 </RelativeLayout>
