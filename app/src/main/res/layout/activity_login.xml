@@ -4,18 +4,14 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#ece4d3">
 
-    <ImageView
-        app:srcCompat="@drawable/logosophie"
-        android:id="@+id/imageView2"
-        android:layout_height="250dp"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textStyle="bold" />
+    <Button
+        android:layout_width="264dp"
+        android:layout_height="239dp"
+        android:id="@+id/button5"
+        android:background="@drawable/logosophie" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -28,7 +24,7 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="402dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:singleLine="true"
         android:fadingEdge="horizontal"
@@ -45,25 +41,28 @@
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="402dp"
+        android:layout_width="match_parent"
         android:layout_height="45dp"
         android:password="true"
         android:singleLine="true"
         android:fadingEdge="horizontal"
-        android:background="@drawable/my_border"/>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text" />
+        android:background="@drawable/my_border"
+        android:layout_marginBottom="20dip"/>
 
 
     <Button
         android:id="@+id/okbutton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
+        android:textStyle="bold"
         android:text="Login"
+
         />
+
+    <TextView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/text" />
 
     <LinearLayout
         android:orientation="vertical"

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#e9e5dc"
     >
 
     <EditText
@@ -34,21 +35,10 @@
         android:layout_height="300dp"
         android:id="@+id/listenButton2"
         android:onClick="listenButtonOnClick"
-        android:layout_marginTop="31dp"
-        android:background="@drawable/micro"
+        android:background="@drawable/micro2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/responseTextView"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
 
     <TextView
         android:text=" Answer"
@@ -58,7 +48,17 @@
         tools:text="Answer:"
         android:textStyle="bold"
         android:textSize="15pt"
-        android:layout_marginBottom="40dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/responseTextView"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
