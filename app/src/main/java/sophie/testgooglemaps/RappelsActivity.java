@@ -73,6 +73,7 @@ public class RappelsActivity extends AppCompatActivity {
 //                tv_table[i+1].setText(arr.getJSONObject(i).getString("name")+" le "+arr.getJSONObject(i).getString("date_task"));
 //            }
         } catch (Exception e) {
+            System.out.println("Exception bordel:\n"+list);
             e.printStackTrace();
         }
     }
