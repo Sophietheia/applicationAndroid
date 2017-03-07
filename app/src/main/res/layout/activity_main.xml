@@ -3,7 +3,7 @@
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/activity_main"
-    android:background="#ece4d3"
+    android:background="#e1d7c3"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:paddingBottom="@dimen/activity_vertical_margin"
@@ -30,62 +30,58 @@ tools:context="sophie.testgooglemaps.MainActivity">
 
     <Button
         android:text="Send Alert"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
         android:id="@+id/button3"
         android:background="#db4a4a"
-        android:layout_alignBottom="@+id/buttonGame"
-        android:layout_alignTop="@+id/buttonGame"
-        android:layout_toRightOf="@+id/button1"
-        android:layout_toEndOf="@+id/button1"
-        android:textStyle="bold"/>
-
-    <Button
-        android:text="Play Game"
-        android:layout_width="180dp"
-        android:layout_height="100dp"
-        android:id="@+id/buttonGame"
-        android:background="#52a1b8"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="390dp"
-        android:textStyle="bold"/>
-
-    <Button
-        android:text="Talk"
-        android:layout_width="180dp"
-        android:layout_height="100dp"
-        android:id="@+id/button2"
-        android:background="#3fb6ad"
-        android:layout_above="@+id/button3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textStyle="bold"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignStart="@+id/button1" />
 
     <Button
         android:text="WHERE AM I"
         android:id="@+id/button1"
         android:background="#c7c9ca"
-        android:layout_width="180dp"
-        android:layout_height="100dp"
-        android:layout_alignBottom="@+id/button2"
+        android:layout_height="120dp"
+        android:textStyle="bold"
+        android:layout_above="@+id/button3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/button2"
-        android:textStyle="bold"/>
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_width="170dp" />
 
+    <Button
+        android:text="Play Game"
+        android:layout_height="120dp"
+        android:id="@+id/buttonGame"
+        android:background="#52a1b8"
+        android:textStyle="bold"
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignStart="@+id/button1"
+        android:layout_width="170dp" />
 
     <Button
         android:text="Reminders"
-        android:layout_width="180dp"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="#f5e072"
         android:id="@+id/button4"
         android:textStyle="bold"
+        android:layout_width="170dp"
         android:layout_above="@+id/button2"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/button1"
-        android:layout_toEndOf="@+id/button1" />
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Talk"
+        android:layout_height="120dp"
+        android:id="@+id/button2"
+        android:background="#3fb6ad"
+        android:layout_width="170dp"
+        android:layout_above="@+id/button3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
