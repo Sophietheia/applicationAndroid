@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#e9e5dc">
 
     <Button
-        android:text="Alerte"
+        android:text=" "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button4" />
+        android:layout_marginTop="100dp"
+        android:id="@+id/button4"
+        android:background="@drawable/help"/>
+
+    <TextView
+        android:text="Click on the button to send an Alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:id="@+id/textView2" />
 </LinearLayout>

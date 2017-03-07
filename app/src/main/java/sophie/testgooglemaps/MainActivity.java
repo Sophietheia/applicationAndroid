@@ -74,11 +74,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button myButton4 = (Button) findViewById(R.id.button4);
+        myButton4.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Log.i("Sophie_the_AI", "Ca marche");
+
+                Intent myIntent = new Intent(MainActivity.this, RappelsActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
         Button buttonGame = (Button) findViewById(R.id.buttonGame);
         buttonGame.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
 
                 Intent myIntent = new Intent(MainActivity.this, MemoryActivity.class);
                 startActivity(myIntent);
