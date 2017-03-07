@@ -3,7 +3,7 @@
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/activity_main"
-    android:background="#e9e5dc"
+    android:background="#ece4d3"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,6 +13,20 @@ android:paddingTop="@dimen/activity_vertical_margin"
 
 tools:context="sophie.testgooglemaps.MainActivity">
 
+
+    <TextView
+        android:text="What do you want to do ?"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="15pt"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/resultTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="23dp"
+        android:layout_marginEnd="23dp" />
 
     <Button
         android:text="Send Alert"
@@ -72,4 +86,5 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/button1"
         android:layout_toEndOf="@+id/button1" />
+
 </RelativeLayout>
