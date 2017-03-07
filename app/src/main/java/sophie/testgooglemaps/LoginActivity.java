@@ -74,32 +74,20 @@ public class LoginActivity extends Activity {
     private EditText UserEditText;
     private EditText PassEditText;
 
-
     public void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        if(SaveSharedPreference.getUserName(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
+        {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
 
+            // Récupération des éléments de la vue définis dans le xml
+            UserEditText = (EditText) findViewById(R.id.username);
+            PassEditText = (EditText) findViewById(R.id.password);
 
-        // Récupération des éléments de la vue définis dans le xml
-        UserEditText = (EditText) findViewById(R.id.username);
-        PassEditText = (EditText) findViewById(R.id.password);
+            Button myButton = (Button) findViewById(R.id.okbutton);
 
-
-        Button myButton = (Button) findViewById(R.id.okbutton);
-
-   myButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-
-
-                Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(myIntent);
-            }
-        });
-
-        /*
-        myButton.setOnClickListener(new View.OnClickListener(){
+            myButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
               Log.i("Sophie_the_AI", "Ca marche");
@@ -110,7 +98,18 @@ public class LoginActivity extends Activity {
                     //System.out.println(connection);  // Pour vérifier la valeure de connection dans les logs
                     if (connection=="true")
                     {
+                        // Transforme le UserEditText en string pour l'utiliser dans la fonction SaveSharedPreference.setUserName(LoginActivity.this, inputText);
+                        final String inputText = UserEditText.getText().toString();
+                        // Test dans la console si ça marche
+                        System.out.println(inputText);
+
+                        SaveSharedPreference.setUserName(LoginActivity.this, inputText);
                         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(myIntent);
+                    }
+                    if (connection=="false")
+                    {
+                        Intent myIntent = new Intent(LoginActivity.this, LoginActivity.class);
                         startActivity(myIntent);
                     }
                 } catch (InterruptedException e) {
@@ -120,16 +119,31 @@ public class LoginActivity extends Activity {
                 }
 
             }
-        });
-*/
+            });
+        }
+
+        else // si l'utilisateur s'est déjà connecté
+        {
+            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(myIntent);
+        }
+
     }
 
     private class JSONParse extends AsyncTask<String, String, JSONObject> {
         private ProgressDialog pDialog;
+
+        String username,password;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
 
+
+            UserEditText = (EditText) findViewById(R.id.username);
+            PassEditText = (EditText) findViewById(R.id.password);
+            username = UserEditText.getText().toString();
+            password = PassEditText.getText().toString();
             pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setMessage("Getting Data ...");
             pDialog.setIndeterminate(false);
@@ -142,6 +156,8 @@ public class LoginActivity extends Activity {
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("password", password));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
@@ -151,9 +167,6 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
-
-
-
         }
     }
 

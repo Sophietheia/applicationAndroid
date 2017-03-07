@@ -60,6 +60,7 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_alignTop="@+id/button2"
         android:textStyle="bold"/>
 
+
     <Button
         android:text="Reminders"
         android:layout_width="180dp"
