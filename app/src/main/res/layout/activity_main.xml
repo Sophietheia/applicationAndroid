@@ -11,14 +11,17 @@ android:paddingRight="@dimen/activity_horizontal_margin"
 android:paddingTop="@dimen/activity_vertical_margin"
 tools:context="sophie.testgooglemaps.MainActivity">
 
-<ImageView
-    app:srcCompat="@drawable/logo"
-    android:id="@+id/imageView"
-    android:layout_height="wrap_content"
-    android:layout_width="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="212dp" />
+    <Button
+        android:text="Maps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/button1"
+        android:layout_marginLeft="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_alignBaseline="@+id/button2"
+        android:layout_alignBottom="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Listen"
@@ -33,6 +36,16 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:text="Play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonGame"
+        android:layout_marginBottom="29dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_alignStart="@+id/button1" />
+
+    <Button
         android:text="Alert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,30 +54,6 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_alignBottom="@+id/buttonGame"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2" />
-
-    <Button
-        android:text="Play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonGame"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/button1"
-        android:layout_alignEnd="@+id/button1"
-        android:layout_marginRight="22dp"
-        android:layout_marginEnd="22dp" />
-
-    <Button
-        android:text="Maps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button1"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="66dp"
-        android:layout_marginStart="66dp" />
 
 
 </RelativeLayout>
