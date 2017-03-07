@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:background="#ece4d3">
+    android:background="#e1d7c3">
 
     <Button
         android:layout_width="264dp"
@@ -19,6 +19,7 @@
         android:layout_marginTop="30dp"
         android:textSize="10pt"
         android:textStyle="bold"
+        android:textColor="#3a41da"
         android:text="Username"
         />
 
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:textSize="10pt"
         android:textStyle="bold"
+        android:textColor="#3a41da"
         android:text="Password"
         />
 
@@ -55,6 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:textStyle="bold"
+        android:background="#c4c4dc"
+
         android:text="Login"
 
         />
@@ -62,7 +66,8 @@
     <TextView
     android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:id="@+id/text" />
+    android:id="@+id/text"
+        />
 
     <LinearLayout
         android:orientation="vertical"
