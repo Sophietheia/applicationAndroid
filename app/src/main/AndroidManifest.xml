@@ -31,7 +31,10 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value=" AIzaSyAxGMonzoVkVNSbdc-ovCTbCLntSjgjujM"      />
+            //android:value="AIzaSyDXMTJc5x_fbv4KYc0zNy1nQ0SuXqWKbNc"
+
+
 
         <activity android:name=".LoginActivity">
             <intent-filter>
@@ -43,7 +46,7 @@
         <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:label="Map"></activity>
         <activity
             android:name=".ListenActivity"
             android:label="listen"></activity>
