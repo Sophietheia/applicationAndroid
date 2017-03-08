@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +26,7 @@ public class RappelsActivity extends AppCompatActivity {
 
     // Lien vers votre page php sur votre serveur
     private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/reminders";
+    private Button ButtonBack;
 
 //    private TextView tv1;
 //    private TextView tv2;
@@ -42,6 +45,16 @@ public class RappelsActivity extends AppCompatActivity {
 
         ArrayList<String> list = new ArrayList<>();
         ArrayList<String> list2 = new ArrayList<>();
+        ButtonBack= (Button) findViewById(R.id.buttonBack);
+        ButtonBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(RappelsActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
         try {
             JSONObject response = new RappelsActivity.JSONParse().execute().get();
