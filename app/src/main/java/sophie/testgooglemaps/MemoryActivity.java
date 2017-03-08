@@ -32,16 +32,29 @@ public class MemoryActivity extends Activity {
 
     private String hardgame="";
     private String easygame="";
-
+    private Button ButtonBack;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memory);
 
+
         hardgame="http://www.kidadoweb.com/jeux-enfants/memory-cuisine/memory-24.htm";
         easygame="http://www.kidadoweb.com/jeux-enfants/memory-animaux/memory-16.htm";
 
         Button playBtn = (Button) findViewById(R.id.playBtn);
+
+        ButtonBack= (Button) findViewById(R.id.buttonBack);
+
+        ButtonBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(MemoryActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
 
         playBtn.setOnClickListener(new View.OnClickListener(){

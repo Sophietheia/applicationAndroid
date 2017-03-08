@@ -21,7 +21,7 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="15pt"
+        android:textSize="25pt"
         android:id="@+id/textView6"
         android:layout_below="@+id/resultTextView"
         android:layout_alignParentRight="true"
@@ -30,31 +30,23 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_marginEnd="23dp" />
 
     <Button
-        android:text="Send Alert"
-        android:layout_width="match_parent"
-        android:id="@+id/button3"
-        android:background="#db4a4a"
-        android:textStyle="bold"
-        android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignStart="@+id/button1" />
-
-    <Button
         android:text="WHERE AM I"
+        android:textAlignment="center"
+        android:textSize="12pt"
         android:id="@+id/button1"
         android:background="#c7c9ca"
         android:layout_height="120dp"
         android:textStyle="bold"
         android:layout_above="@+id/button3"
+        android:layout_width="170dp"
+        android:layout_weight="1"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="11dp"
-        android:layout_marginStart="11dp"
-        android:layout_width="170dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
+        android:textAlignment="center"
         android:text="Play Game"
+        android:textSize="12pt"
         android:layout_height="120dp"
         android:id="@+id/buttonGame"
         android:background="#52a1b8"
@@ -62,27 +54,53 @@ tools:context="sophie.testgooglemaps.MainActivity">
         android:layout_above="@+id/button1"
         android:layout_alignLeft="@+id/button1"
         android:layout_alignStart="@+id/button1"
-        android:layout_width="170dp" />
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:layout_alignRight="@+id/button1"
+        android:layout_alignEnd="@+id/button1" />
 
     <Button
-        android:text="Reminders"
-        android:layout_height="120dp"
-        android:background="#f5e072"
-        android:id="@+id/button4"
+        android:text="Send Alert"
+        android:textAlignment="center"
+        android:textSize="12pt"
+        android:layout_width="match_parent"
+        android:id="@+id/button3"
+        android:background="#db4a4a"
         android:textStyle="bold"
-        android:layout_width="170dp"
-        android:layout_above="@+id/button2"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
         android:text="Talk"
+        android:textAlignment="center"
         android:layout_height="120dp"
+        android:textSize="12pt"
+        android:textStyle="bold"
         android:id="@+id/button2"
         android:background="#3fb6ad"
         android:layout_width="170dp"
+        android:layout_weight="1"
         android:layout_above="@+id/button3"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/button1"
+        android:layout_toEndOf="@+id/button1" />
+
+    <Button
+        android:text="Reminders"
+        android:layout_height="120dp"
+        android:textSize="12pt"
+        android:background="#f5e072"
+        android:id="@+id/button4"
+        android:textStyle="bold"
+        android:layout_width="170dp"
+        android:layout_weight="1"
+        android:layout_above="@+id/button2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2" />
 
 </RelativeLayout>
