@@ -14,6 +14,8 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import com.google.gson.JsonElement;
+
+import java.util.Locale;
 import java.util.Map;
 import android.widget.TextView;
 import android.support.v4.app.FragmentActivity;
@@ -31,6 +33,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 import android.view.View;
+import android.speech.tts.TextToSpeech;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +49,8 @@ public class ListenActivity extends Activity implements AIListener {
     private TextView resultTextView;
     private AIService aiService;
     private TextView responseTextView;
+
+    private TextToSpeech t1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +70,16 @@ public class ListenActivity extends Activity implements AIListener {
         responseTextView = (TextView) findViewById(R.id.responseTextView);
 
         ButtonBack= (Button) findViewById(R.id.buttonBack);
+
+    /////initialization for text to speecht
+        t1=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.UK);
+                }
+            }
+        });
 
         ButtonBack.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -111,11 +126,20 @@ public class ListenActivity extends Activity implements AIListener {
 
 
         responseTextView.setText(result.getFulfillment().getSpeech());
+        String toSpeak = responseTextView.getText().toString();
+        Toast.makeText(getApplicationContext(),toSpeak ,Toast.LENGTH_SHORT).show();
+        t1.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
 
 
     }
 
-
+    public void onPause(){
+        if(t1 !=null){
+            t1.stop();
+            t1.shutdown();
+        }
+        super.onPause();
+    }
 
     // method to handle errors
     @Override
