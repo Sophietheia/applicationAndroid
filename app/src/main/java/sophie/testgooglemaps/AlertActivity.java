@@ -16,10 +16,13 @@ import android.view.View;
 import android.widget.Button;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 /**
  * Created by Alex on 25/02/2017.
@@ -66,9 +69,12 @@ public class AlertActivity  extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
+
+
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("username", "admin"));  // A changer ,hgjkg,gjgjgjgjhg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // Getting JSON from URL
-            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "GET", params);
+            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
             //Log.i("Sophie_the_AI", json.toString());
             return json;

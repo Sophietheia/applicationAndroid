@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
 
     private final static String TAG = "MainActivity";
     public final static String PREFS = "PrefsFile";
