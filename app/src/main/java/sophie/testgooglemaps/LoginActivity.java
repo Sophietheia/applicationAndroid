@@ -76,9 +76,10 @@ public class LoginActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState)
     {
+        super.onCreate(savedInstanceState);
+
         if(SaveSharedPreference.getUserName(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
         {
-            super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_login);
 
             // Récupération des éléments de la vue définis dans le xml

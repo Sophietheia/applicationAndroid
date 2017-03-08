@@ -2,6 +2,7 @@ package sophie.testgooglemaps;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,6 +42,7 @@ import org.json.JSONObject;
 public class ListenActivity extends Activity implements AIListener {
 
     private Button listenButton2;
+    private Button ButtonBack;
     private TextView resultTextView;
     private AIService aiService;
     private TextView responseTextView;
@@ -61,15 +64,32 @@ public class ListenActivity extends Activity implements AIListener {
         resultTextView = (TextView) findViewById(R.id.resultTextView);
         responseTextView = (TextView) findViewById(R.id.responseTextView);
 
+        ButtonBack= (Button) findViewById(R.id.buttonBack);
+
+        ButtonBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
+
+                Intent myIntent = new Intent(ListenActivity.this, MainActivity.class);
+                startActivity(myIntent);
+            }
+        });
+
+
         // ask permission to use the microphone
         if (ContextCompat.checkSelfPermission(ListenActivity.this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(ListenActivity.this, new String[]{Manifest.permission.RECORD_AUDIO}, 1);
         }
     }
 
+
+
+
     //method to start listening on the button click
     public void listenButtonOnClick(final View view) {
         aiService.startListening();
+
     }
 
     //method to show the results when the listening is complete

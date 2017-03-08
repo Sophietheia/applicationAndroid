@@ -5,7 +5,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
-    android:background="#e1d7c3">
+    android:background="#e1d7c3"
+    >
 
     <Button
         android:layout_width="264dp"
@@ -39,6 +40,7 @@
         android:textStyle="bold"
         android:textColor="#3a41da"
         android:text="Password"
+
         />
 
     <EditText
@@ -57,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:textStyle="bold"
-        android:background="#c4c4dc"
+        android:background="@color/place_autocomplete_search_hint"
 
         android:text="Login"
 
