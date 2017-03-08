@@ -2,6 +2,7 @@ package sophie.testgooglemaps;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -56,6 +59,7 @@ public class MapsActivity extends FragmentActivity
     private boolean mPermissionDenied = false;
 
     private GoogleMap mMap;
+    private Circle circle;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -64,13 +68,18 @@ public class MapsActivity extends FragmentActivity
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
-            
+
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
 
         }
+
+
+
+
+
     }
     @Override
     public void onResume() {
@@ -164,8 +173,28 @@ public class MapsActivity extends FragmentActivity
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
 
+        // Ajoute un cercle
+        Button addZoneButton = (Button) findViewById(R.id.addZone);
+        addZoneButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+        circle = mMap.addCircle(new CircleOptions()
+                .center(new LatLng(48.851626, 2.286972))
+                .radius(1000)
+                .strokeWidth(10)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(128, 255, 0, 0)));
+            }
+        });
 
 
+        /* Another method :
+        mMap.addCircle(new CircleOptions()
+                        .center(new LatLng(-33.87365, 151.20689))
+                        .radius(10000)
+                        .strokeColor(Color.RED)
+                        .fillColor(Color.BLUE));
+            */
 
 
 
