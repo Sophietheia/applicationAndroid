@@ -40,40 +40,25 @@ public class RappelsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rappels);
 
-        String list[] = new String[10];
-//        TextView tv_table[] = new TextView[10];
-//
-//        tv_table[1] = (TextView) findViewById(R.id.tv1);
-//        tv_table[2] = (TextView) findViewById(R.id.tv2);
-//        tv_table[3] = (TextView) findViewById(R.id.tv3);
-//        tv_table[4] = (TextView) findViewById(R.id.tv4);
-//        tv_table[5] = (TextView) findViewById(R.id.tv5);
-//        tv_table[6] = (TextView) findViewById(R.id.tv6);
-//        tv_table[7] = (TextView) findViewById(R.id.tv7);
-//        tv_table[8] = (TextView) findViewById(R.id.tv8);
-//        tv_table[9] = (TextView) findViewById(R.id.tv9);
-
-        Log.i("Sophie_the_AI", "on Create");
+        ArrayList<String> list = new ArrayList<>();
+        ArrayList<String> list2 = new ArrayList<>();
 
         try {
             JSONObject response = new RappelsActivity.JSONParse().execute().get();
             JSONArray arr = response.getJSONArray("json");
 
             for(int i = 0; i < arr.length() && i<10; i++){
-                list[i] = arr.getJSONObject(i).getString("name")+" le "+arr.getJSONObject(i).getString("date_task");
+                list.add(arr.getJSONObject(i).getString("name")+"\n"+arr.getJSONObject(i).getString("date_task"));
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, list);
+                    android.R.layout.simple_list_item_1,android.R.id.text1,list);
 
-            ListView listView = (ListView) findViewById(R.id.list_reminders);
-            listView.setAdapter(adapter);
-//            List<String> list = new ArrayList<String>();
-//            for(int i = 0; i < arr.length() && i<10; i++){
-//                tv_table[i+1].setText(arr.getJSONObject(i).getString("name")+" le "+arr.getJSONObject(i).getString("date_task"));
-//            }
+            ListView listView1 = (ListView) findViewById(R.id.list_reminders);
+
+            listView1.setAdapter(adapter);
+
         } catch (Exception e) {
-            System.out.println("Exception bordel:\n"+list);
             e.printStackTrace();
         }
     }
