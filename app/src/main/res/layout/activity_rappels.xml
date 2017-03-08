@@ -12,7 +12,7 @@
     tools:context="sophie.testgooglemaps.RappelsActivity">
 
     <TextView
-        android:text="Rappels"
+        android:text="Reminders"
         android:textSize="40sp"
         android:layout_width="350dp"
         android:layout_height="50dp"
@@ -22,12 +22,25 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="61dp" />
 
+    <Button
+        android:layout_width="130dp"
+        android:id="@+id/buttonBack"
+        android:layout_height="97dp"
+        android:layout_weight="0.20"
+        android:background="@drawable/ic_close_light"
+        android:layout_marginRight="256dp"
+        android:layout_marginEnd="256dp"
+        android:layout_marginBottom="44dp"
+        android:layout_alignBottom="@+id/tv0"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
     <ListView
         android:id="@+id/list_reminders"
         android:layout_width="match_parent"
+        android:layout_height="350dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_height="350dp" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
