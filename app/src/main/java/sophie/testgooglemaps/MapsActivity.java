@@ -1,5 +1,6 @@
 package sophie.testgooglemaps;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
+import android.os.AsyncTask;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -34,7 +36,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MapsActivity extends FragmentActivity
@@ -60,6 +67,9 @@ public class MapsActivity extends FragmentActivity
 
     private GoogleMap mMap;
     private Circle circle;
+
+    // Lien vers votre page php sur votre serveur
+    private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/exitZone";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -130,6 +140,23 @@ public class MapsActivity extends FragmentActivity
         msg.append(location.getLongitude());
 
         Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show();
+
+        // Calcul par rapport à la zone
+        if (circle!=null) {
+            float[] distance = new float[2];
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                    circle.getCenter().latitude, circle.getCenter().longitude, distance);
+
+            if (distance[0] > circle.getRadius()) {
+                Toast.makeText(getBaseContext(), "Outside, distance from center: " + distance[0] + " radius: " + circle.getRadius(), Toast.LENGTH_LONG).show();
+                new MapsActivity.JSONParse().execute();
+
+            } else {
+                Toast.makeText(getBaseContext(), "Inside, distance from center: " + distance[0] + " radius: " + circle.getRadius(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+
     }
 
     @Override
@@ -178,6 +205,10 @@ public class MapsActivity extends FragmentActivity
         addZoneButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                //Location location = null;
+                //location.getLatitude();
+                //location.getLongitude();
+
         circle = mMap.addCircle(new CircleOptions()
                 .center(new LatLng(48.851626, 2.286972))
                 .radius(1000)
@@ -186,6 +217,8 @@ public class MapsActivity extends FragmentActivity
                 .fillColor(Color.argb(128, 255, 0, 0)));
             }
         });
+
+
 
 
         /* Another method :
@@ -258,5 +291,42 @@ public class MapsActivity extends FragmentActivity
     private void showMissingPermissionError() {
         PermissionUtils.PermissionDeniedDialog
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
+
+    // Alert si l'utilisateur sort de la zone
+    private class JSONParse extends AsyncTask<String, String, JSONObject> {
+        private ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+            pDialog = new ProgressDialog(MapsActivity.this);
+            pDialog.setMessage("Getting Data ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+            JSONParser jsonParser = new JSONParser();
+
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("username", "admin"));  // A changer ,hgjkg,gjgjgjgjhg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // Getting JSON from URL
+            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "GET", params);
+
+            //Log.i("Sophie_the_AI", json.toString());
+            return json;
+        }
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            pDialog.dismiss();
+
+
+
+        }
     }
 }
