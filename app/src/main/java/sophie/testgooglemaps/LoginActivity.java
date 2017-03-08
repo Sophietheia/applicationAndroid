@@ -74,6 +74,8 @@ public class LoginActivity extends Activity {
     private EditText UserEditText;
     private EditText PassEditText;
 
+    String username,password;
+
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,9 @@ public class LoginActivity extends Activity {
             @Override
             public void onClick(View v){
               Log.i("Sophie_the_AI", "Ca marche");
+
+                username = UserEditText.getText().toString();
+                password = PassEditText.getText().toString();
 
                 try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
@@ -119,6 +124,7 @@ public class LoginActivity extends Activity {
                     e.printStackTrace();
                 }
 
+
             }
             });
         }
@@ -131,10 +137,10 @@ public class LoginActivity extends Activity {
 
     }
 
-    private class JSONParse extends AsyncTask<String, String, JSONObject> {
+    public class JSONParse extends AsyncTask<String, String, JSONObject> {
         private ProgressDialog pDialog;
 
-        String username,password;
+
 
         @Override
         protected void onPreExecute() {
@@ -143,8 +149,7 @@ public class LoginActivity extends Activity {
 
             UserEditText = (EditText) findViewById(R.id.username);
             PassEditText = (EditText) findViewById(R.id.password);
-            username = UserEditText.getText().toString();
-            password = PassEditText.getText().toString();
+
             pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setMessage("Getting Data ...");
             pDialog.setIndeterminate(false);
@@ -154,7 +159,7 @@ public class LoginActivity extends Activity {
         }
 
         @Override
-        protected JSONObject doInBackground(String... args) {
+        public JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("username", username));

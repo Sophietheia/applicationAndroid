@@ -88,9 +88,12 @@ public class AlertActivity  extends Activity {
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
+            // On récupère le username pour qu'on sache quel utilisateur a envoyé une alerte
+            String username = SaveSharedPreference.getUserName(AlertActivity.this);
+
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", "admin"));  // A changer ,hgjkg,gjgjgjgjhg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            params.add(new BasicNameValuePair("username", username));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
