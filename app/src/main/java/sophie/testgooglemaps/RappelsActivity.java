@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -92,8 +93,11 @@ public class RappelsActivity extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
+
+            String username = SaveSharedPreference.getUserName(RappelsActivity.this);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // Getting JSON from URL
+            params.add(new BasicNameValuePair("username", username));
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
             Log.i("Sophie_the_AI", json.toString());

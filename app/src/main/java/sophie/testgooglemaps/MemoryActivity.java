@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -130,7 +131,11 @@ public class MemoryActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
+
+            String username = SaveSharedPreference.getUserName(MemoryActivity.this);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+            params.add(new BasicNameValuePair("username", username));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
