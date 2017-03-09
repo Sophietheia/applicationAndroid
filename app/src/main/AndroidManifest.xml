@@ -31,39 +31,39 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value=" AIzaSyAxGMonzoVkVNSbdc-ovCTbCLntSjgjujM"      />
-            //android:value="AIzaSyDXMTJc5x_fbv4KYc0zNy1nQ0SuXqWKbNc"
+            android:value="@string/google_maps_key"      />
+        <!--android:value="AIzaSyDXMTJc5x_fbv4KYc0zNy1nQ0SuXqWKbNc"-->
 
 
 
-        <activity android:name=".LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <activity android:name=".LoginActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity"></activity>
-        <activity
-            android:name=".MapsActivity"
-            android:label="Map"></activity>
-        <activity
-            android:name=".ListenActivity"
-            android:label="listen"></activity>
-        <activity
-            android:name=".AlertActivity"
-            android:label="alert">
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity android:name=".MainActivity"></activity>
+    <activity
+        android:name=".MapsActivity"
+        android:label="Map"></activity>
+    <activity
+        android:name=".ListenActivity"
+        android:label="listen"></activity>
+    <activity
+        android:name=".AlertActivity"
+        android:label="alert">
+    </activity>
 
-        <service
-            android:name="sophie.testgooglemaps.CheckRecentRun" >
-        </service>
+    <service
+        android:name="sophie.testgooglemaps.CheckRecentRun" >
+    </service>
 
-        <activity
-            android:name=".MemoryActivity">
-        </activity>
+    <activity
+        android:name=".MemoryActivity">
+    </activity>
 
-        <activity android:name=".RappelsActivity"></activity>
-    </application>
+    <activity android:name=".RappelsActivity"></activity>
+</application>
 
 </manifest>
