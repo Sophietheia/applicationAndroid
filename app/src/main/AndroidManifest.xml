@@ -43,13 +43,23 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
     </activity>
-    <activity android:name=".MainActivity"></activity>
+
+    <activity android:name=".MainActivity">
+
+    </activity>
+
     <activity
         android:name=".MapsActivity"
-        android:label="Map"></activity>
+        android:label="Map">
+
+    </activity>
+
     <activity
         android:name=".ListenActivity"
-        android:label="listen"></activity>
+        android:label="listen">
+
+    </activity>
+
     <activity
         android:name=".AlertActivity"
         android:label="alert">
@@ -63,7 +73,13 @@
         android:name=".MemoryActivity">
     </activity>
 
-    <activity android:name=".RappelsActivity"></activity>
+    <activity android:name=".RappelsActivity">
+
+    </activity>
+
+        <service android:name=".MyLocationService" android:process=":my_service" />
+
+
 </application>
 
 </manifest>

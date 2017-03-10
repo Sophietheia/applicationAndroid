@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.vision.barcode.Barcode;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -42,13 +44,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 public class MapsActivity extends FragmentActivity
         implements
         OnMyLocationButtonClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
+        ActivityCompat.OnRequestPermissionsResultCallback {
     private LocationManager locationManager;
 
 
@@ -68,13 +71,15 @@ public class MapsActivity extends FragmentActivity
     private GoogleMap mMap;
     private Circle circle;
 
+
     // Lien vers votre page php sur votre serveur
-    private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/exitZone";
+    private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/zone";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -86,12 +91,11 @@ public class MapsActivity extends FragmentActivity
 
         }
 
-
-
-
-
+        startService(new Intent(this, MyLocationService.class));
+        Log.e("Service", "startService");
     }
-    @Override
+
+    /*@Override
     public void onResume() {
         super.onResume();
 
@@ -114,7 +118,7 @@ public class MapsActivity extends FragmentActivity
     /**
      * Méthode permettant de s'abonner à la localisation par GPS.
      */
-    public void abonnementGPS() {
+   /* public void abonnementGPS() {
         //On s'abonne
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -124,7 +128,7 @@ public class MapsActivity extends FragmentActivity
     /**
      * Méthode permettant de se désabonner de la localisation par GPS.
      */
-    public void desabonnementGPS() {
+   /* public void desabonnementGPS() {
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
         //Si le GPS est disponible, on s'y abonne
@@ -176,7 +180,7 @@ public class MapsActivity extends FragmentActivity
     }
 
     @Override
-    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
+    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }*/
 
 
     // Ce qui précède sert à savoir la latitude et la longitude. Tout ce qui suit sert à afficher le point bleu
@@ -199,24 +203,41 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
+        try {
+        JSONObject answer1 = new JSONParse().execute().get();
+        String latitude = answer1.optString("latitude");
+            String longitude = answer1.optString("longitude");
+            String radius = answer1.optString("radius");
 
-        // Ajoute un cercle
-        Button addZoneButton = (Button) findViewById(R.id.addZone);
-        addZoneButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //Location location = null;
-                //location.getLatitude();
-                //location.getLongitude();
+            Log.e("Cercle", "Latitude : " + latitude + " Longitude : " + longitude + " Radius: " + radius);
 
-        circle = mMap.addCircle(new CircleOptions()
-                .center(new LatLng(48.851626, 2.286972))
-                .radius(1000)
+            // Conversion pour pouvoir utiliser les valeurs dans addCircle
+           int radiusInt = Integer.valueOf(radius);
+            double latitudeDouble = Double.parseDouble(latitude);
+            double longitudeDouble = Double.parseDouble(longitude);
+
+
+           Log.e("Cercle conversion", "Latitude : " + latitudeDouble + " Longitude : " + longitudeDouble + " Radius: " + radiusInt);
+
+           LatLng position = new LatLng(latitudeDouble, longitudeDouble);
+
+            Log.e("Cercle", "Position : " + position);
+
+
+
+        mMap.addCircle(new CircleOptions()
+                .center(position)
+                .radius(radiusInt)
                 .strokeWidth(10)
                 .strokeColor(Color.GREEN)
                 .fillColor(Color.argb(128, 255, 0, 0)));
-            }
-        });
+         
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -305,28 +326,31 @@ public class MapsActivity extends FragmentActivity
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
-
         }
 
         @Override
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
+            // On récupère le username pour qu'on sache quel utilisateur a envoyé une alerte
+            String username = SaveSharedPreference.getUserName(MapsActivity.this);
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", "admin"));  // A changer ,hgjkg,gjgjgjgjhg!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            params.add(new BasicNameValuePair("username", username));
             // Getting JSON from URL
-            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "GET", params);
+            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
             //Log.i("Sophie_the_AI", json.toString());
             return json;
         }
+
         @Override
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
 
-
-
         }
     }
+
+
+
 }
