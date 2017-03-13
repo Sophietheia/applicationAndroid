@@ -36,6 +36,8 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -68,6 +70,8 @@ public class LoginActivity extends Activity {
 
     // Lien vers votre page php sur votre serveur
     private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/login";
+    private static final String PREF_NAME = "APIAI_preferences";
+    private static final String SESSION_ID = "sessionId";
 
     public ProgressDialog progressDialog;
 
@@ -98,6 +102,12 @@ public class LoginActivity extends Activity {
                 username = UserEditText.getText().toString();
                 password = PassEditText.getText().toString();
 
+                //**************************************************
+                save(LoginActivity.this, username);
+
+                System.out.println("Username: .....: "+getValue(LoginActivity.this));
+                //**************************************************
+
                 try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
                     String connection = response.optString("connection");
@@ -110,6 +120,7 @@ public class LoginActivity extends Activity {
                         System.out.println(inputText);
 
                         SaveSharedPreference.setUserName(LoginActivity.this, inputText);
+
                         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(myIntent);
                     }
@@ -174,6 +185,24 @@ public class LoginActivity extends Activity {
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
         }
+    }
+
+    public void save(Context context, String text) {
+        SharedPreferences settings;
+        SharedPreferences.Editor editor;
+        settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE); //1
+        editor = settings.edit(); //2
+
+        editor.putString(SESSION_ID, text); //3
+        editor.commit(); //4
+    }
+
+    public String getValue(Context context) {
+        SharedPreferences settings;
+        String text;
+        settings = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE); //1
+        text = settings.getString(SESSION_ID, ""); //2
+        return text;
     }
 
 }
