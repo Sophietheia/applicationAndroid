@@ -62,7 +62,7 @@ public class MemoryActivity extends Activity {
             @Override
             public void onClick(View view){
 
-               try {
+                  /*   try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
                      System.out.println("hello");
                     String connection = response.optString("stade");
@@ -98,15 +98,15 @@ public class MemoryActivity extends Activity {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                }
-        /*        try {
+                }*/
+          try {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hardgame));
                 startActivity(browserIntent); }
 
                 catch (ActivityNotFoundException e) {
-//                    Toast.makeText(this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                    // Toast.makeText(this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
                     e.printStackTrace();
-                }*/
+                }
 
 
             }
