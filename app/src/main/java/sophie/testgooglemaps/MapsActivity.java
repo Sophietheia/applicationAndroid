@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -27,7 +26,6 @@ import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.vision.barcode.Barcode;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -51,7 +49,7 @@ public class MapsActivity extends FragmentActivity
         implements
         OnMyLocationButtonClickListener,
         OnMapReadyCallback,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
     private LocationManager locationManager;
 
 
@@ -60,7 +58,7 @@ public class MapsActivity extends FragmentActivity
      *
      * @see #onRequestPermissionsResult(int, String[], int[])
      */
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -71,15 +69,16 @@ public class MapsActivity extends FragmentActivity
     private GoogleMap mMap;
     private Circle circle;
 
-
     // Lien vers votre page php sur votre serveur
     private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/zone";
+    // Alerte si sort de la zone
+    private static final String	UPDATE_URL2	= "https://sophietheai.herokuapp.com/exitZone";
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
 
@@ -91,11 +90,12 @@ public class MapsActivity extends FragmentActivity
 
         }
 
-        startService(new Intent(this, MyLocationService.class));
-        Log.e("Service", "startService");
-    }
 
-    /*@Override
+
+
+
+    }
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -118,7 +118,7 @@ public class MapsActivity extends FragmentActivity
     /**
      * Méthode permettant de s'abonner à la localisation par GPS.
      */
-   /* public void abonnementGPS() {
+    public void abonnementGPS() {
         //On s'abonne
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -128,11 +128,11 @@ public class MapsActivity extends FragmentActivity
     /**
      * Méthode permettant de se désabonner de la localisation par GPS.
      */
-   /* public void desabonnementGPS() {
+    public void desabonnementGPS() {
         if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-        //Si le GPS est disponible, on s'y abonne
-        locationManager.removeUpdates(this);}
+            //Si le GPS est disponible, on s'y abonne
+            locationManager.removeUpdates(this);}
     }
 
     @Override
@@ -147,16 +147,19 @@ public class MapsActivity extends FragmentActivity
 
         // Calcul par rapport à la zone
         if (circle!=null) {
+            Log.e("Sophie_the_AI", "circle n'est pas null");
             float[] distance = new float[2];
             Location.distanceBetween(location.getLatitude(), location.getLongitude(),
                     circle.getCenter().latitude, circle.getCenter().longitude, distance);
 
             if (distance[0] > circle.getRadius()) {
-                Toast.makeText(getBaseContext(), "Outside, distance from center: " + distance[0] + " radius: " + circle.getRadius(), Toast.LENGTH_LONG).show();
-                new MapsActivity.JSONParse().execute();
+                Toast.makeText(getBaseContext(), "Outside, distance from center: " + distance[0] + " radius: " +
+                        circle.getRadius(), Toast.LENGTH_LONG).show();
+                new MapsActivity.JSONParse2().execute();
 
             } else {
-                Toast.makeText(getBaseContext(), "Inside, distance from center: " + distance[0] + " radius: " + circle.getRadius(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Inside, distance from center: " + distance[0] + " radius: " +
+                        circle.getRadius(), Toast.LENGTH_LONG).show();
             }
         }
 
@@ -180,7 +183,7 @@ public class MapsActivity extends FragmentActivity
     }
 
     @Override
-    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }*/
+    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
 
 
     // Ce qui précède sert à savoir la latitude et la longitude. Tout ce qui suit sert à afficher le point bleu
@@ -203,41 +206,53 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
+
+        // Ajoute un cercle
+        // Button addZoneButton = (Button) findViewById(R.id.addZone);
+        // addZoneButton.setOnClickListener(new View.OnClickListener(){
+        //   @Override
+        //    public void onClick(View v){
+        //Location location = null;
+        //location.getLatitude();
+        //location.getLongitude();
         try {
-        JSONObject answer1 = new JSONParse().execute().get();
-        String latitude = answer1.optString("latitude");
+            JSONObject answer1 = new JSONParse().execute().get();
+            String latitude = answer1.optString("latitude");
             String longitude = answer1.optString("longitude");
             String radius = answer1.optString("radius");
 
-            Log.e("Cercle", "Latitude : " + latitude + " Longitude : " + longitude + " Radius: " + radius);
-
-            // Conversion pour pouvoir utiliser les valeurs dans addCircle
-           int radiusInt = Integer.valueOf(radius);
+            // Conversion pour pouvoir utilsier les valeurs dans addCircle
+            int radiusInt = Integer.valueOf(radius);
             double latitudeDouble = Double.parseDouble(latitude);
             double longitudeDouble = Double.parseDouble(longitude);
 
+            LatLng position = new LatLng(latitudeDouble, longitudeDouble);
 
-           Log.e("Cercle conversion", "Latitude : " + latitudeDouble + " Longitude : " + longitudeDouble + " Radius: " + radiusInt);
+            circle = mMap.addCircle(new CircleOptions()
+                    .center(position)
+                    .radius(radiusInt)
+                    .strokeWidth(10)
+                    .strokeColor(Color.GREEN)
+                    .fillColor(Color.argb(128, 255, 0, 0)));
+            if (circle==null)
+            {
+                Log.e("Sophie_the_AI", "circle est null");
+            }
 
-           LatLng position = new LatLng(latitudeDouble, longitudeDouble);
+            if (circle!=null)
+            {
+                Log.e("Sophie_the_AI", "circle n'est pas null");
+            }
 
-            Log.e("Cercle", "Position : " + position);
-
-
-
-        mMap.addCircle(new CircleOptions()
-                .center(position)
-                .radius(radiusInt)
-                .strokeWidth(10)
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(128, 255, 0, 0)));
-         
 
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+
+        // });
 
 
 
@@ -317,6 +332,7 @@ public class MapsActivity extends FragmentActivity
     // Alert si l'utilisateur sort de la zone
     private class JSONParse extends AsyncTask<String, String, JSONObject> {
         private ProgressDialog pDialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -326,19 +342,20 @@ public class MapsActivity extends FragmentActivity
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
             pDialog.show();
+
         }
 
         @Override
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            // On récupère le username pour qu'on sache quel utilisateur a envoyé une alerte
             String username = SaveSharedPreference.getUserName(MapsActivity.this);
+
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("username", username));
             // Getting JSON from URL
-            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
+            JSONObject json = jsonParser.makeHttpRequest(UPDATE_URL, "POST", params);
 
             //Log.i("Sophie_the_AI", json.toString());
             return json;
@@ -348,9 +365,47 @@ public class MapsActivity extends FragmentActivity
         protected void onPostExecute(JSONObject json) {
             pDialog.dismiss();
 
+
         }
     }
 
+    // Alert si l'utilisateur sort de la zone
+    private class JSONParse2 extends AsyncTask<String, String, JSONObject> {
+        private ProgressDialog pDialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
 
+            pDialog = new ProgressDialog(MapsActivity.this);
+            pDialog.setMessage("Getting Data ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+            JSONParser jsonParser = new JSONParser();
+
+            String username = SaveSharedPreference.getUserName(MapsActivity.this);
+
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("username", username));
+            // Getting JSON from URL
+            JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL2, "POST", params);
+
+            //Log.i("Sophie_the_AI", json.toString());
+            return json;
+        }
+        @Override
+        protected void onPostExecute(JSONObject json) {
+            pDialog.dismiss();
+
+
+
+        }
+    }
 
 }
