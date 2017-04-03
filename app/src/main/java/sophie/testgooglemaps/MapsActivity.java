@@ -349,7 +349,7 @@ public class MapsActivity extends FragmentActivity
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getUserName(MapsActivity.this);
+            String username = SaveSharedPreference.getSession_ID(MapsActivity.this);
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -388,7 +388,7 @@ public class MapsActivity extends FragmentActivity
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getUserName(MapsActivity.this);
+            String username = SaveSharedPreference.getSession_ID(MapsActivity.this);
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();

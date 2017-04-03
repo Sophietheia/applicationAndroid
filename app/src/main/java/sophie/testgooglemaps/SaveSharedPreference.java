@@ -11,21 +11,21 @@ import android.preference.PreferenceManager;
 
 public class SaveSharedPreference extends Activity {
 
-    static final String PREF_USER_NAME= "username";
+    static final String PREF_SESSION_ID= "";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
     }
 
-    public static void setUserName(Context ctx, String userName)
+    public static void setSessionID(Context ctx, String session_id)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-        editor.putString(PREF_USER_NAME, userName);
+        editor.putString(PREF_SESSION_ID, session_id);
         editor.commit();
     }
 
-    public static String getUserName(Context ctx)
+    public static String getSession_ID(Context ctx)
     {
-        return getSharedPreferences(ctx).getString(PREF_USER_NAME, "");
+        return getSharedPreferences(ctx).getString(PREF_SESSION_ID, "");
     }
 }

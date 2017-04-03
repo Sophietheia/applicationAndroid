@@ -31,8 +31,9 @@ public class MemoryActivity extends Activity {
 
     private static final String	UPDATE_URL	= "https://sophietheai.herokuapp.com/memory";
 
-    private String hardgame="";
-    private String easygame="";
+    String hardgame="http://www.kidadoweb.com/jeux-enfants/memory-cuisine/memory-24.htm";
+    String easygame="http://www.kidadoweb.com/jeux-enfants/memory-animaux/memory-16.htm";
+
     private Button ButtonBack;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,7 @@ public class MemoryActivity extends Activity {
         setContentView(R.layout.activity_memory);
 
 
-        hardgame="http://www.kidadoweb.com/jeux-enfants/memory-cuisine/memory-24.htm";
-        easygame="http://www.kidadoweb.com/jeux-enfants/memory-animaux/memory-16.htm";
+
 
         Button playBtn = (Button) findViewById(R.id.playBtn);
 
@@ -62,13 +62,13 @@ public class MemoryActivity extends Activity {
             @Override
             public void onClick(View view){
 
-                  /*   try {
+                     try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
                      System.out.println("hello");
-                    String connection = response.optString("stade");
-                    System.out.println(connection);  // Pour vérifier la valeure de connection dans les logs
+                    int stade = response.optInt("stade");
+                    System.out.println(stade);  // Pour vérifier la valeure de connection dans les logs
 
-                   if (connection=="true")
+                   if (stade==1)
                    {
 
                        try {
@@ -81,7 +81,7 @@ public class MemoryActivity extends Activity {
                        }
 
                    }
-                   if (connection=="false")
+                   if (stade==2)
                    {
 
                        try {
@@ -98,11 +98,11 @@ public class MemoryActivity extends Activity {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                }*/
-          try {
+                }
+   /*       try {
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hardgame));
                 startActivity(browserIntent); }
-
+*/
                 catch (ActivityNotFoundException e) {
                     // Toast.makeText(this, "No application can handle this request." + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
                     e.printStackTrace();
@@ -132,10 +132,10 @@ public class MemoryActivity extends Activity {
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getUserName(MemoryActivity.this);
+            String session_id = SaveSharedPreference.getSession_ID(MemoryActivity.this);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("sessionId", session_id));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 

@@ -167,7 +167,7 @@ public class MyLocationService extends Service {
             JSONParser jsonParser = new JSONParser();
 
             // On récupère le username pour qu'on sache quel utilisateur a envoyé une alerte
-            String username = SaveSharedPreference.getUserName(MyLocationService.this);
+            String username = SaveSharedPreference.getSession_ID(MyLocationService.this);
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("username", username));

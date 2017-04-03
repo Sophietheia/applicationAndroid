@@ -84,8 +84,8 @@ public class LoginActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
 
-        if(SaveSharedPreference.getUserName(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
-        {
+        //if(SaveSharedPreference.getSession_ID(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
+        //{
             setContentView(R.layout.activity_login);
 
             // Récupération des éléments de la vue définis dans le xml
@@ -102,31 +102,35 @@ public class LoginActivity extends Activity {
                 username = UserEditText.getText().toString();
                 password = PassEditText.getText().toString();
 
-                //**************************************************
-                save(LoginActivity.this, username);
-
-                System.out.println("Username: .....: "+getValue(LoginActivity.this));
-                //**************************************************
 
                 try {
                     JSONObject response = new JSONParse().execute().get(); // On rajouter .get() à la fin pour récupérer le JSONObject qu'on return avec la méthode doInBackground
-                    String connection = response.optString("connection");
-                    //System.out.println(connection);  // Pour vérifier la valeure de connection dans les logs
-                    if (connection=="true")
+                    String session_id = response.optString("user_id");
+                    System.out.println("session" +session_id);  // Pour vérifier la valeure de connection dans les logs
+                    //**************************************************
+                    save(LoginActivity.this, session_id);
+
+                    System.out.println("Username: .....: "+getValue(LoginActivity.this));
+                    //**************************************************
+
+
+                    if (session_id.equals("-1"))
+                    {
+                        Intent myIntent = new Intent(LoginActivity.this, LoginActivity.class);
+                        startActivity(myIntent);
+                    }
+
+                    else
                     {
                         // Transforme le UserEditText en string pour l'utiliser dans la fonction SaveSharedPreference.setUserName(LoginActivity.this, inputText);
                         final String inputText = UserEditText.getText().toString();
+
                         // Test dans la console si ça marche
                         System.out.println(inputText);
 
-                        SaveSharedPreference.setUserName(LoginActivity.this, inputText);
+                        SaveSharedPreference.setSessionID(LoginActivity.this, session_id);
 
                         Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(myIntent);
-                    }
-                    if (connection=="false")
-                    {
-                        Intent myIntent = new Intent(LoginActivity.this, LoginActivity.class);
                         startActivity(myIntent);
                     }
                 } catch (InterruptedException e) {
@@ -138,13 +142,13 @@ public class LoginActivity extends Activity {
 
             }
             });
-        }
+      //  }
 
-        else // si l'utilisateur s'est déjà connecté
-        {
-            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(myIntent);
-        }
+        //else // si l'utilisateur s'est déjà connecté
+        //{
+          //  Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+           // startActivity(myIntent);
+        //}
 
     }
 

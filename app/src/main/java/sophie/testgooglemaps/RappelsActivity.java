@@ -94,10 +94,10 @@ public class RappelsActivity extends AppCompatActivity {
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getUserName(RappelsActivity.this);
+            String session_id = SaveSharedPreference.getSession_ID(RappelsActivity.this);
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             // Getting JSON from URL
-            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("sessionId", session_id));
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL, "POST", params);
 
             Log.i("Sophie_the_AI", json.toString());
