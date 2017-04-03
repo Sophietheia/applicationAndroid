@@ -45,6 +45,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
+
+
 public class MapsActivity extends FragmentActivity
         implements
         OnMyLocationButtonClickListener,
@@ -52,13 +54,12 @@ public class MapsActivity extends FragmentActivity
         ActivityCompat.OnRequestPermissionsResultCallback, LocationListener {
     private LocationManager locationManager;
 
-
     /**
      * Request code for location permission request.
      *
      * @see #onRequestPermissionsResult(int, String[], int[])
      */
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 0;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     /**
      * Flag indicating whether a requested permission has been denied after returning in
@@ -76,117 +77,16 @@ public class MapsActivity extends FragmentActivity
 
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-
-
-            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            mapFragment.getMapAsync(this);
-
-        }
-
-
-
-
-
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //Obtention de la référence du service
-        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
-
-        //Si le GPS est disponible, on s'y abonne
-        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            abonnementGPS();
-        }
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        //On appelle la méthode pour se désabonner
-        desabonnementGPS();
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
-    /**
-     * Méthode permettant de s'abonner à la localisation par GPS.
-     */
-    public void abonnementGPS() {
-        //On s'abonne
-        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
-        }
-    }
-    /**
-     * Méthode permettant de se désabonner de la localisation par GPS.
-     */
-    public void desabonnementGPS() {
-        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            //Si le GPS est disponible, on s'y abonne
-            locationManager.removeUpdates(this);}
-    }
 
-    @Override
-    public void onLocationChanged(final Location location) {
-        //On affiche dans un Toat la nouvelle Localisation
-        final StringBuilder msg = new StringBuilder("lat : ");
-        msg.append(location.getLatitude());
-        msg.append( "; lng : ");
-        msg.append(location.getLongitude());
-
-        Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show();
-
-        // Calcul par rapport à la zone
-        if (circle!=null) {
-            Log.e("Sophie_the_AI", "circle n'est pas null");
-            float[] distance = new float[2];
-            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
-                    circle.getCenter().latitude, circle.getCenter().longitude, distance);
-
-            if (distance[0] > circle.getRadius()) {
-                Toast.makeText(getBaseContext(), "Outside, distance from center: " + distance[0] + " radius: " +
-                        circle.getRadius(), Toast.LENGTH_LONG).show();
-                new MapsActivity.JSONParse2().execute();
-
-            } else {
-                Toast.makeText(getBaseContext(), "Inside, distance from center: " + distance[0] + " radius: " +
-                        circle.getRadius(), Toast.LENGTH_LONG).show();
-            }
-        }
-
-
-    }
-
-    @Override
-    public void onProviderDisabled(final String provider) {
-        //Si le GPS est désactivé on se désabonne
-        if("gps".equals(provider)) {
-            desabonnementGPS();
-        }
-    }
-
-    @Override
-    public void onProviderEnabled(final String provider) {
-        //Si le GPS est activé on s'abonne
-        if("gps".equals(provider)) {
-            abonnementGPS();
-        }
-    }
-
-    @Override
-    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
-
-
-    // Ce qui précède sert à savoir la latitude et la longitude. Tout ce qui suit sert à afficher le point bleu
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -206,15 +106,6 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-
-        // Ajoute un cercle
-        // Button addZoneButton = (Button) findViewById(R.id.addZone);
-        // addZoneButton.setOnClickListener(new View.OnClickListener(){
-        //   @Override
-        //    public void onClick(View v){
-        //Location location = null;
-        //location.getLatitude();
-        //location.getLongitude();
         try {
             JSONObject answer1 = new JSONParse().execute().get();
             String latitude = answer1.optString("latitude");
@@ -250,23 +141,6 @@ public class MapsActivity extends FragmentActivity
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-
-        // });
-
-
-
-
-        /* Another method :
-        mMap.addCircle(new CircleOptions()
-                        .center(new LatLng(-33.87365, 151.20689))
-                        .radius(10000)
-                        .strokeColor(Color.RED)
-                        .fillColor(Color.BLUE));
-            */
-
-
-
     }
 
     /**
@@ -278,8 +152,6 @@ public class MapsActivity extends FragmentActivity
             // Permission to access the location is missing.
             PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
-
-
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
@@ -329,7 +201,100 @@ public class MapsActivity extends FragmentActivity
                 .newInstance(true).show(getSupportFragmentManager(), "dialog");
     }
 
-    // Alert si l'utilisateur sort de la zone
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //Obtention de la référence du service
+        locationManager = (LocationManager) this.getSystemService(LOCATION_SERVICE);
+
+        //Si le GPS est disponible, on s'y abonne
+        if(locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            abonnementGPS();
+        }
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        //On appelle la méthode pour se désabonner
+        desabonnementGPS();
+    }
+
+    /**
+     * Méthode permettant de s'abonner à la localisation par GPS.
+     */
+    public void abonnementGPS() {
+        //On s'abonne
+        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
+        }
+    }
+    /**
+     * Méthode permettant de se désabonner de la localisation par GPS.
+     */
+    public void desabonnementGPS() {
+        if (ContextCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            //Si le GPS est disponible, on s'y abonne
+            locationManager.removeUpdates(this);}
+    }
+
+
+    @Override
+    public void onLocationChanged(final Location location) {
+        //On affiche dans un Toat la nouvelle Localisation
+        final StringBuilder msg = new StringBuilder("lat : ");
+        msg.append(location.getLatitude());
+        msg.append( "; lng : ");
+        msg.append(location.getLongitude());
+
+        Toast.makeText(this, msg.toString(), Toast.LENGTH_SHORT).show();
+
+        // Calcul par rapport à la zone
+       if (circle!=null) {
+            Log.e("Sophie_the_AI", "circle n'est pas null");
+            float[] distance = new float[2];
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                    circle.getCenter().latitude, circle.getCenter().longitude, distance);
+
+            if (distance[0] > circle.getRadius()) {
+                Toast.makeText(getBaseContext(), "Outside, distance from center: " + distance[0] + " radius: " +
+                        circle.getRadius(), Toast.LENGTH_LONG).show();
+                new MapsActivity.JSONParse2().execute();
+
+            } else {
+                Toast.makeText(getBaseContext(), "Inside, distance from center: " + distance[0] + " radius: " +
+                        circle.getRadius(), Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+    }
+
+    @Override
+    public void onProviderDisabled(final String provider) {
+        //Si le GPS est désactivé on se désabonne
+        if("gps".equals(provider)) {
+            desabonnementGPS();
+        }
+    }
+
+    @Override
+    public void onProviderEnabled(final String provider) {
+        //Si le GPS est activé on s'abonne
+        if("gps".equals(provider)) {
+            abonnementGPS();
+        }
+    }
+
+    @Override
+    public void onStatusChanged(final String provider, final int status, final Bundle extras) { }
+
+    // Récupérer la zone
     private class JSONParse extends AsyncTask<String, String, JSONObject> {
         private ProgressDialog pDialog;
 
@@ -349,11 +314,11 @@ public class MapsActivity extends FragmentActivity
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getSession_ID(MapsActivity.this);
+            String session_id = SaveSharedPreference.getSession_ID(MapsActivity.this);
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("sessionId", session_id));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest(UPDATE_URL, "POST", params);
 
@@ -388,11 +353,11 @@ public class MapsActivity extends FragmentActivity
         protected JSONObject doInBackground(String... args) {
             JSONParser jsonParser = new JSONParser();
 
-            String username = SaveSharedPreference.getSession_ID(MapsActivity.this);
+            String session_id = SaveSharedPreference.getSession_ID(MapsActivity.this);
 
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
-            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("sessionId", session_id));
             // Getting JSON from URL
             JSONObject json = jsonParser.makeHttpRequest (UPDATE_URL2, "POST", params);
 
@@ -407,5 +372,6 @@ public class MapsActivity extends FragmentActivity
 
         }
     }
+
 
 }

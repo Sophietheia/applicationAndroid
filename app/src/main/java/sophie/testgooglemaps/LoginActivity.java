@@ -84,8 +84,8 @@ public class LoginActivity extends Activity {
     {
         super.onCreate(savedInstanceState);
 
-        //if(SaveSharedPreference.getSession_ID(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
-        //{
+        if(SaveSharedPreference.getSession_ID(LoginActivity.this).length() == 0) // si l'utilisateur ne s'est pas déjà connecté
+        {
             setContentView(R.layout.activity_login);
 
             // Récupération des éléments de la vue définis dans le xml
@@ -142,13 +142,13 @@ public class LoginActivity extends Activity {
 
             }
             });
-      //  }
+       }
 
-        //else // si l'utilisateur s'est déjà connecté
-        //{
-          //  Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-           // startActivity(myIntent);
-        //}
+        else // si l'utilisateur s'est déjà connecté
+        {
+            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(myIntent);
+        }
 
     }
 
