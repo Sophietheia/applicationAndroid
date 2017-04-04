@@ -62,7 +62,7 @@ public class RappelsActivity extends AppCompatActivity {
             JSONArray arr = response.getJSONArray("json");
 
             for(int i = 0; i < arr.length() && i<10; i++){
-                list.add(arr.getJSONObject(i).getString("name")+"\n"+arr.getJSONObject(i).getString("date_task"));
+                list.add(arr.getJSONObject(i).getString("label")+"\n"+arr.getJSONObject(i).getString("surname")+"\n"+arr.getJSONObject(i).getString("date_task")+" - "+arr.getJSONObject(i).getString("time_task"));
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
