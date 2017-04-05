@@ -106,34 +106,43 @@ public class MapsActivity extends FragmentActivity
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
 
-        try {
+       try {
             JSONObject answer1 = new JSONParse().execute().get();
+
             String latitude = answer1.optString("latitude");
             String longitude = answer1.optString("longitude");
             String radius = answer1.optString("radius");
 
-            // Conversion pour pouvoir utilsier les valeurs dans addCircle
-            int radiusInt = Integer.valueOf(radius);
-            double latitudeDouble = Double.parseDouble(latitude);
-            double longitudeDouble = Double.parseDouble(longitude);
+           // On a un bug : parfois on reçoit une latitude et une longitude null, du coup quand on clique sur "where am I", l'appli retourne sur le menu principal
+           Log.e("Sophie_the_AI", "latitude : " + latitude + " longitude : " + longitude + " radius : "+ radius);
 
-            LatLng position = new LatLng(latitudeDouble, longitudeDouble);
+           if (latitude==null | longitude ==null) {
+               Toast.makeText(getBaseContext(), "latitude et longitude null", Toast.LENGTH_LONG).show();
+           }
 
-            circle = mMap.addCircle(new CircleOptions()
-                    .center(position)
-                    .radius(radiusInt)
-                    .strokeWidth(10)
-                    .strokeColor(Color.GREEN)
-                    .fillColor(Color.argb(128, 255, 0, 0)));
-            if (circle==null)
-            {
-                Log.e("Sophie_the_AI", "circle est null");
-            }
+           else {
+               // Conversion pour pouvoir utilsier les valeurs dans addCircle
+               int radiusInt = Integer.valueOf(radius);
+               double latitudeDouble = Double.parseDouble(latitude);
+               double longitudeDouble = Double.parseDouble(longitude);
 
-            if (circle!=null)
-            {
-                Log.e("Sophie_the_AI", "circle n'est pas null");
-            }
+               LatLng position = new LatLng(latitudeDouble, longitudeDouble);
+
+               circle = mMap.addCircle(new CircleOptions()
+                       .center(position)
+                       .radius(radiusInt)
+                       .strokeWidth(10)
+                       .strokeColor(Color.GREEN)
+                       .fillColor(Color.argb(128, 255, 0, 0)));
+               if (circle == null) {
+                   Log.e("Sophie_the_AI", "circle est null");
+               }
+
+               if (circle != null) {
+                   Log.e("Sophie_the_AI", "circle n'est pas null");
+               }
+           }
+
 
 
         } catch (InterruptedException e) {
